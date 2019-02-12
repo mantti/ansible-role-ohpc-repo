@@ -1,5 +1,11 @@
 ---
 # tasks file for ansible-role-ohpc-repo
 
+- name: Copy OpenHPC signing key to node
+  copy: src=files/RPM-GPG-KEY-OpenHPC-1 dest=/etc/pki/rpm-gpg/RPM-GPG-KEY-OpenHPC-1
+
+- name: Import OpenHPC signing key
+  rpm_key: key=/etc/pki/rpm-gpg/RPM-GPG-KEY-OpenHPC-1 state=present
+
 - name: get OpenHPC Repo
   yum: name={{ openhpc_release_rpm }} state=present
